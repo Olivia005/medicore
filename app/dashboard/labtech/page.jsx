@@ -1,6 +1,6 @@
 'use client'
 
-import LabTechSidebar from '@/components/dashboard/LabTechSidebar'
+ 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,6 +13,7 @@ import {
   Users
 } from 'lucide-react'
 import Link from 'next/link'
+import LabTechSidebar from '@/components/dashboard/LabTechSidebar'
 
 export default function LabTechDashboard () {
   return (
