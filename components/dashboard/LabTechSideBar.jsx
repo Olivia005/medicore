@@ -9,7 +9,7 @@ const labtechNavItems = [
   { label: 'Billing', href: '/dashboard/labtech/billing' }
 ]
 
-export default function LabTechSidebar () {
+export default function LabTechSideBar () {
   const pathname = usePathname()
   return (
     <aside className='w-64 min-h-screen bg-white border-r border-blue-100 flex flex-col py-8 px-4'>

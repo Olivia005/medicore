@@ -1,6 +1,5 @@
 'use client'
 
- 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,13 +12,13 @@ import {
   Users
 } from 'lucide-react'
 import Link from 'next/link'
-import LabTechSidebar from '@/components/dashboard/LabTechSidebar'
+import LabTechSideBar from '@/components/dashboard/LabTechSideBar'
 
 export default function LabTechDashboard () {
   return (
     <div className='min-h-screen flex bg-gradient-to-br from-blue-50 to-white'>
       {/* Sidebar */}
-      <LabTechSidebar />
+      <LabTechSideBar />
       {/* Main Content */}
       <main className='flex-1'>
         {/* Top Bar */}
