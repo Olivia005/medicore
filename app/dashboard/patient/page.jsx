@@ -1,39 +1,79 @@
 "use client";
 
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Activity, Users, FileText, Calendar, Download, Clock, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import PatientSidebar from '@/components/dashboard/PatientSidebar';
+import Tests from '@/components/patientComponents/Tests';
+import Prescriptions from '@/components/patientComponents/Prescriptions';
+import BillingPage from '@/components/patientComponents/BillingPage';
+import DispensaryStore from '@/components/patientComponents/DispensaryStore';
+
+import ProfilePage from '@/components/patientComponents/ProfilePage';
 
 export default function PatientDashboard () {
+  const [activeView, setActiveView] = useState('dashboard')
+
+  // Render content based on active view
+  const renderContent = () => {
+    switch (activeView) {
+      case 'dashboard':
+        return <DashboardContent />
+      case 'tests':
+        return <Tests />
+      case 'prescriptions':
+        return <Prescriptions />
+      case 'billing':
+        return <BillingPage />
+      case 'dispensary':
+        return <DispensaryStore />
+      case 'profile':
+        return <ProfilePage />
+      default:
+        return <DashboardContent />
+    }
+  }
+
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-blue-50 to-white">
-      <PatientSidebar />
-      <main className="flex-1 flex flex-col">
-        {/* Top Bar */}
-        <div className="bg-white shadow-sm border-b border-blue-100 px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Activity className="h-8 w-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">MediLab & Drug Store</h1>
-            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium ml-4">
-              Patient Portal
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
-              <Calendar className="w-4 h-4 mr-2" />
-              Book Appointment
-            </Button>
-            <Link href="/login">
-              <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
-                Logout
-              </Button>
-            </Link>
-          </div>
-        </div>
+      {/* Fixed Sidebar */}
+      <PatientSidebar activeView={activeView} setActiveView={setActiveView} />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Main Content Area */}
+      <main className="flex-1 flex flex-col">{renderContent()}</main>
+    </div>
+  )
+}
+
+// Dashboard Content Component
+function DashboardContent() {
+  return (
+    <>
+      {/* Top Bar */}
+      <div className="bg-white border-b border-blue-200 px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Activity className="h-8 w-8 text-blue-600" />
+          <h1 className="text-2xl font-bold text-gray-900">MediLab & Drug Store</h1>
+          <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm font-medium ml-4">
+            Patient Portal
+          </span>
+        </div>
+        <div className="flex items-center space-x-4">
+          <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
+            <Calendar className="w-4 h-4 mr-2" />
+            Book Appointment
+          </Button>
+          <Link href="/login">
+            <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
+              Logout
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
@@ -47,7 +87,7 @@ export default function PatientDashboard () {
 
   {/* Quick Stats */}
   <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <Card className="border-blue-200 hover:shadow-lg transition-shadow">
+          <Card className="border border-blue-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -59,7 +99,7 @@ export default function PatientDashboard () {
             </CardContent>
           </Card>
 
-          <Card className="border-blue-100 hover:shadow-lg transition-shadow">
+          <Card className="border border-blue-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -71,7 +111,7 @@ export default function PatientDashboard () {
             </CardContent>
           </Card>
 
-          <Card className="border-blue-100 hover:shadow-lg transition-shadow">
+          <Card className="border border-blue-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -82,7 +122,7 @@ export default function PatientDashboard () {
               </div>
             </CardContent>
           </Card>
-          <Card className="border-blue-100 hover:shadow-lg transition-shadow">
+          <Card className="border border-blue-200">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -99,7 +139,7 @@ export default function PatientDashboard () {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Recent Test Results */}
           <div className="lg:col-span-2">
-            <Card className="border-blue-100">
+            <Card className="border border-blue-200">
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
                   <FileText className="h-5 w-5 text-blue-600" />
@@ -153,7 +193,7 @@ export default function PatientDashboard () {
 
           {/* Quick Actions & Info */}
           <div className="space-y-6">
-            <Card className="border-blue-100">
+            <Card className="border border-blue-200">
               <CardHeader>
                 <CardTitle>Quick Actions</CardTitle>
               </CardHeader>
@@ -173,7 +213,7 @@ export default function PatientDashboard () {
               </CardContent>
             </Card>
 
-            <Card className="border-blue-100">
+            <Card className="border border-blue-200">
               <CardHeader>
                 <CardTitle>Current Prescriptions</CardTitle>
               </CardHeader>
@@ -192,8 +232,7 @@ export default function PatientDashboard () {
             </Card>
           </div>
         </div>
-        </div>
-      </main>
-    </div>
+      </div>
+    </>
   )
 }

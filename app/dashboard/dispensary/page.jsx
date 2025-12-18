@@ -1,39 +1,81 @@
 'use client';
 
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Activity, Pill, Package, ShoppingCart, AlertTriangle, CheckCircle, Clock, Search } from 'lucide-react';
 import Link from 'next/link';
 import DispensarySidebar from '@/components/dashboard/DispensarySidebar';
+import OrdersPage from '@/components/dispensaryComponents/OrdersPage';
+import BuyOrderPage from '@/components/dispensaryComponents/BuyOrderPage';
+import InventoryPage from '@/components/dispensaryComponents/InventoryPage';
+import BillingPage from '@/components/dispensaryComponents/BillingPage';
+import ReportsPage from '@/components/dispensaryComponents/ReportsPage';
+import ProfilePage from '@/components/dispensaryComponents/ProfilePage';
 
 export default function DispensaryDashboard() {
+  const [activeView, setActiveView] = useState('dashboard');
+
+  // Render content based on active view
+  const renderContent = () => {
+    switch (activeView) {
+      case 'dashboard':
+        return <DashboardContent />;
+      case 'orders':
+        return <OrdersPage />;
+      case 'buy-order':
+        return <BuyOrderPage />;
+      case 'inventory':
+        return <InventoryPage />;
+      case 'billing':
+        return <BillingPage />;
+      case 'reports':
+        return <ReportsPage />;
+      case 'profile':
+        return <ProfilePage />;
+      default:
+        return <DashboardContent />;
+    }
+  };
+
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-blue-50 to-white">
-      <DispensarySidebar />
-      <main className="flex-1 flex flex-col">
-        {/* Top Bar */}
-        <div className="bg-white shadow-sm border-b border-blue-100 px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Activity className="h-8 w-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">MediLab & Drug Store</h1>
-            <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-sm font-medium ml-4">
-              Dispensary Worker
-            </span>
-          </div>
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
-              <Package className="w-4 h-4 mr-2" />
-              Inventory
-            </Button>
-            <Link href="/login">
-              <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
-                Logout
-              </Button>
-            </Link>
-          </div>
-        </div>
+      {/* Fixed Sidebar */}
+      <DispensarySidebar activeView={activeView} setActiveView={setActiveView} />
+      
+      {/* Main Content Area */}
+      <main className="flex-1 flex flex-col">{renderContent()}</main>
+    </div>
+  );
+}
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+// Dashboard Content Component
+function DashboardContent() {
+  return (
+    <>
+      {/* Top Bar */}
+      <div className="bg-white shadow-sm border-b border-blue-100 px-8 py-4 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Activity className="h-8 w-8 text-blue-600" />
+          <h1 className="text-2xl font-bold text-gray-900">MediLab & Drug Store</h1>
+          <span className="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-sm font-medium ml-4">
+            Dispensary Worker
+          </span>
+        </div>
+        <div className="flex items-center space-x-4">
+          <Button variant="outline" className="border-blue-200 text-blue-600 hover:bg-blue-50">
+            <Package className="w-4 h-4 mr-2" />
+            Inventory
+          </Button>
+          <Link href="/login">
+            <Button variant="outline" className="border-red-200 text-red-600 hover:bg-red-50">
+              Logout
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
         <div className="mb-8">
           <div className="flex items-center space-x-3 mb-4">
@@ -231,7 +273,6 @@ export default function DispensaryDashboard() {
           </div>
         </div>
       </div>
-      </main>
-    </div>
+    </>
   );
 }

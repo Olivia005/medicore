@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,14 +14,49 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import LabTechSideBar from '@/components/dashboard/LabTechSideBar'
+import LaboratoryTests from '@/components/labtechComponents/LaboratoryTests'
+import RadiologyTests from '@/components/labtechComponents/RadiologyTests'
+import PathologyTests from '@/components/labtechComponents/PathologyTests'
+import BillingView from '@/components/labtechComponents/BillingView'
 
 export default function LabTechDashboard () {
+  const [activeView, setActiveView] = useState('dashboard')
+
+  // Render content based on active view
+  const renderContent = () => {
+    switch (activeView) {
+      case 'dashboard':
+        return <DashboardContent />
+      case 'laboratory':
+        return <LaboratoryTests />
+      case 'radiology':
+        return <RadiologyTests />
+      case 'pathology':
+        return <PathologyTests />
+      case 'billing':
+        return <BillingView />
+      default:
+        return <DashboardContent />
+    }
+  }
+
   return (
     <div className='min-h-screen flex bg-gradient-to-br from-blue-50 to-white'>
-      {/* Sidebar */}
-      <LabTechSideBar />
+      {/* Fixed Sidebar */}
+      <LabTechSideBar activeView={activeView} setActiveView={setActiveView} />
+      
+      {/* Main Content Area */}
+      <main className='flex-1 flex flex-col'>{renderContent()}</main>
+    </div>
+  )
+}
+
+// Dashboard Content Component
+function DashboardContent() {
+  return (
+    <>
       {/* Main Content */}
-      <main className='flex-1'>
+      <div className='flex-1'>
         {/* Top Bar */}
         <div className='bg-white shadow-sm border-b border-blue-100 px-8 py-4 flex items-center justify-between'>
           <div className='flex items-center space-x-2'>
@@ -289,7 +325,7 @@ export default function LabTechDashboard () {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </>
   )
 }
