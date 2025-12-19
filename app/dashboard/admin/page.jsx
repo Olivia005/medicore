@@ -21,7 +21,7 @@ export default function AdminDashboard () {
   const renderContent = () => {
     switch (activeView) {
       case 'dashboard':
-        return <DashboardDetails />
+        return <DashboardDetails setActiveView={setActiveView} />
       case 'tests':
         return <LabTests />
       case 'patient-history':
@@ -33,7 +33,7 @@ export default function AdminDashboard () {
       case 'administration':
         return <Administration />
       default:
-        return <DashboardDetails />
+        return <DashboardDetails setActiveView={setActiveView} />
     }
   }
 

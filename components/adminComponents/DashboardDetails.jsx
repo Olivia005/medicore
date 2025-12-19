@@ -15,11 +15,7 @@ import {
   TestTube
 } from 'lucide-react'
 
-function handleAddNewUser() {
-  alert('Add New User functionality coming soon!')
-}
-
-export default function DashboardDetails() {
+export default function DashboardDetails({ setActiveView }) {
   return (
     <>
       {/* Welcome Section */}
@@ -237,12 +233,15 @@ export default function DashboardDetails() {
               <div className='flex flex-col space-y-4'>
                 <Button
                   className='w-full flex items-center gap-3 bg-blue-600 text-white hover:bg-blue-700'
-                  onClick={handleAddNewUser}
+                  onClick={() => setActiveView('administration')}
                 >
                   <UserPlus className='h-5 w-5' />
                   Add New User
                 </Button>
-                <Button className='w-full flex items-center gap-3 bg-blue-500 text-white hover:bg-blue-600'>
+                <Button 
+                  className='w-full flex items-center gap-3 bg-blue-500 text-white hover:bg-blue-600'
+                  onClick={() => setActiveView('tests')}
+                >
                   <Database className='h-5 w-5' />
                   Manage Labs
                 </Button>
